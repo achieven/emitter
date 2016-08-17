@@ -1,3 +1,7 @@
+Instructions:
+
+npm install
+
 To run app:
 
 1. node index.js
