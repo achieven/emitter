@@ -6,7 +6,9 @@ module.exports = function(config) {
         frameworks: ['jasmine', 'requirejs'],
         files: [
             {pattern: 'server/serverUtil.js', included: false},
+            {pattern: 'client/emitterUtil.js', included: false},
             {pattern: 'test/testServer.Spec.js', included: false},
+            {pattern: 'test/testClient.Spec.js', included: false},
             'test/test-main.js',
         ],
         exclude: [

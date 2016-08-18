@@ -1,8 +1,6 @@
 'use strict';
-let emitter;
 const React = require('react');
-
-const util = require('./emitterUtil.js');
+let emitterUtil;
 let tickerComponent, chartComponent;
 let emitFrequency, throttleBufferSize;
 const maxRendersPerSecond = 2;
@@ -29,6 +27,20 @@ let Form = React.createClass({
     }
 });
 
+let Number = React.createClass({
+    propTypes: {
+        number: React.PropTypes.number,
+        encodedNumber: React.PropTypes.string
+    },
+    render: function () {
+        return (
+            <tr>
+                <td>Number: {this.props.number}, Encoded Number: {this.props.encodedNumber}</td>
+            </tr>
+        );
+    }
+});
+
 let Ticker = React.createClass({
     propTypes: {
         last20Numbers: React.PropTypes.array
@@ -42,10 +54,7 @@ let Ticker = React.createClass({
         };
     },
     handleIncomingEmit: function (data) {
-        let thisComponent = this;
-        let last20Numbers;
-
-        last20Numbers = util.ticker.updateStateWithoutRendering.call(thisComponent, data);
+        let last20Numbers = emitterUtil.ticker.updateStateWithoutRendering.call(this, data);
         this.elementsInsideBuffer++;
         this.setState({
             last20Numbers: last20Numbers,
@@ -53,15 +62,21 @@ let Ticker = React.createClass({
         });
     },
     shouldComponentUpdate: function () {
-        if (this.elementsInsideBuffer >= throttleBufferSize) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return this.elementsInsideBuffer >= throttleBufferSize;
+    },
+    buildNumbersToRender: function () {
+        let last20NumbersDomElements = [];
+        let thisComponent = this;
+        this.state.last20Numbers.forEach(function (data) {
+            let uniqueChildKey = data.timestamp.toString() + thisComponent.state.numberOfIncomingEmits;
+            last20NumbersDomElements.push(
+                <Number key={uniqueChildKey} number={data.number} encodedNumber={data.encodedNumber}/>
+            );
+        });
+        return last20NumbersDomElements;
     },
     render: function () {
-        this.last20NumbersDomElements = util.ticker.buildNumbersToRender.call(this);
+        this.last20NumbersDomElements = this.buildNumbersToRender();
         return (
             <table className="table">
                 <tbody>
@@ -89,8 +104,7 @@ let Chart = React.createClass({
         };
     },
     handleIncomingEmit: function (data) {
-        let thisComponent = this;
-        let last100Data = util.chart.updateStateWithoutRendering.call(this, data);
+        let last100Data = emitterUtil.chart.updateStateWithoutRendering.call(this, data);
         this.elementsInsideBuffer++;
         this.setState({
             last100Timestamps: last100Data.last100Timestamps,
@@ -98,12 +112,7 @@ let Chart = React.createClass({
         });
     },
     shouldComponentUpdate: function () {
-        if (this.elementsInsideBuffer >= throttleBufferSize) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return this.elementsInsideBuffer >= throttleBufferSize;
     },
     render: function () {
         return (<div className="chart"></div>);
@@ -132,6 +141,11 @@ let Emitter = React.createClass({
         };
     },
     componentDidMount: function () {
+        if (!emitterUtil) {
+            requirejs(['client/emitterUtil'], function (util) {
+                emitterUtil = util;
+            });
+        }
         let socket = io.connect('/emitterPage');
         $('#emitFrequencyForm').submit(function (event) {
             event.preventDefault();
@@ -163,9 +177,10 @@ let Emitter = React.createClass({
                 <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css"/>
                 <script src="./node_modules/chartist/dist/chartist.min.js"></script>
                 <link rel="stylesheet" href="./node_modules/chartist/dist/chartist.min.css"/>
+                <script src="./node_modules/requirejs/require.js"></script>
                 <script src="/bundle.js"></script>
             </div>
         )
-    }
+    },
 });
 module.exports = Emitter;
