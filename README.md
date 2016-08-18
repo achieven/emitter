@@ -1,6 +1,6 @@
 Instructions:
 
-Setup:
+Setup:    
 1. git clone https://github.com/achieven/emitter.git    
 2. cd emitter    
 3. npm install    
