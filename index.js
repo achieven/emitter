@@ -22,9 +22,9 @@ requirejs([
     const server = http.Server(app);
     const io = socketio(server);
     jsx.install();
-
-    server.listen(3333, function () {
-        console.log('listening on localhost:3333')
+    let port = process.env.PORT || 3333;
+    server.listen(port, function () {
+        console.log('listening on localhost:' + port)
     });
 
     app.use(express.static(__dirname + '/'));
