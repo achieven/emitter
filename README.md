@@ -8,7 +8,7 @@ Setup:
 To run app:
 
 1. node index.js
-2. Open browser at http://localhost:3333/emitter
+2. Open browser at http://localhost:3333
 
 To run tests:
 

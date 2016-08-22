@@ -32,7 +32,7 @@ requirejs([
         browserify('./server/app.js').transform('reactify').bundle().pipe(res);
     });
 
-    app.get('/emitter', function (req, res) {
+    app.get('/', function (req, res) {
         const Emitter = require('./client/emitterView.jsx');
         res.setHeader('Content-Type', 'text/html');
         res.end(ReactDOMServer.renderToStaticMarkup(
