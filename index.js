@@ -65,7 +65,7 @@ requirejs([
             clearInterval(socket.emitJsonIntervalId);
         })
     });
-})
+});
 
 
 

@@ -7,7 +7,7 @@ define([], function(){
         '7': {signBitsBinaryRepresentation: '011', mantisBits: 25, exponentBits: 4},
         '10': {signBitsBinaryRepresentation: '100', mantisBits: 34, exponentBits: 3},
         '12': {signBitsBinaryRepresentation: '101', mantisBits: 42, exponentBits: 3},
-        '16': {signBitsBinaryRepresentation: '110', mantisBits: 53, exponentBits: 0}
+        '16': {signBitsBinaryRepresentation: '11', mantisBits: 54, exponentBits: 0}
     };
     let Util = {
         calculateMantisExponentDecimal: function (number) {
@@ -48,6 +48,22 @@ define([], function(){
             }
             return numberString;
         },
+        bin2hex: function (fullBinaryReperesentation) {
+            
+            let binarySeperatedToQuadruplets = fullBinaryReperesentation.match(/.{1,4}/g);
+            let fullHexRepresentation = '';
+            let pair = 0;
+            binarySeperatedToQuadruplets.forEach(function (quadruplet, index) {
+                if (pair%2 === 0 && index != 0) {
+                    fullHexRepresentation += ' ';
+                    pair = 0;
+                }
+                fullHexRepresentation += parseInt(quadruplet, 2).toString(16);
+                pair++;
+
+            });
+            return fullHexRepresentation;
+        },
         encodeNumber: function (number) {
             let mantisAndExponentDecimal = this.calculateMantisExponentDecimal(number);
             let mantisDecimal = mantisAndExponentDecimal.mantisDecimal;
@@ -64,7 +80,7 @@ define([], function(){
             let exponentBinaryRepresenatation = this.appendZerosToPrefix(exponentBinaryWithNumberOfBits, exponentBits);
 
             let fullBinaryReperesentation = signBinaryRepresentation += mantisBinaryRepresenation += exponentBinaryRepresenatation;
-            let fullHexRepresentation = parseInt(fullBinaryReperesentation, 2).toString(16);
+            let fullHexRepresentation = this.bin2hex(fullBinaryReperesentation);
             return fullHexRepresentation;
         },
         generateJson: function () {
@@ -78,6 +94,7 @@ define([], function(){
             return jsonObjectToEmit;
         }
     }
+    
     return Util;
 });
 
