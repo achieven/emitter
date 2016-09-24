@@ -142,7 +142,7 @@ let Emitter = React.createClass({
     },
     componentDidMount: function () {
         if (!emitterUtil) {
-            requirejs(['client/emitterUtil'], function (util) {
+            requirejs(['client/emitterUtil'], function (util) {//
                 emitterUtil = util;
             });
         }
