@@ -1,3 +1,6 @@
+This project is a web page that displays numbers also in a table and also in a highcharts chart.  
+The client tells the server how many times per seconds to emit, the server then generates a random number and encodes it according to the colored coins protocol (has similarity to double percision IEEE-754) and emits it back to the client which renders not more than twice per second.
+
 Instructions:
 
 Setup:    
