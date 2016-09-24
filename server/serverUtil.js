@@ -49,7 +49,7 @@ define([], function(){
             return numberString;
         },
         bin2hex: function (fullBinaryReperesentation) {
-            
+
             let binarySeperatedToQuadruplets = fullBinaryReperesentation.match(/.{1,4}/g);
             let fullHexRepresentation = '';
             let pair = 0;

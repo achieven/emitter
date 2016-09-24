@@ -27,7 +27,7 @@ requirejs([
         console.log('listening on localhost:' + port)
     });
 
-    app.use(express.static(__dirname + '/'));
+        app.use(express.static(__dirname + '/'));
     app.use('/bundle.js', function (req, res) {
         browserify('./server/app.js').transform('reactify').bundle().pipe(res);
     });
