@@ -142,7 +142,7 @@ let Emitter = React.createClass({
     },
     componentDidMount: function () {
         if (!emitterUtil) {
-            requirejs(['client/emitterUtil'], function (util) {
+            requirejs(['../.././projects/emitter/client/emitterUtil'], function (util) {
                 emitterUtil = util;
             });
         }
@@ -171,14 +171,14 @@ let Emitter = React.createClass({
                            last100Numbers={this.props.chart.numbers}>
                     </Chart>
                 </div>
-                <script src="./node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
-                <script src="./node_modules/jquery/dist/jquery.min.js"></script>
-                <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-                <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-                <script src="./node_modules/chartist/dist/chartist.min.js"></script>
-                <link rel="stylesheet" href="./node_modules/chartist/dist/chartist.min.css"/>
-                <script src="./node_modules/requirejs/require.js"></script>
-                <script src="/bundle.js"></script>
+                <script src="../.././node_modules/socket.io-client/socket.io.js"></script>
+                <script src="../.././node_modules/jquery/dist/jquery.min.js"></script>
+                <script src="../.././node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+                <link rel="stylesheet" href="../.././node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+                <script src="../.././node_modules/chartist/dist/chartist.min.js"></script>
+                <link rel="stylesheet" href="../.././node_modules/chartist/dist/chartist.min.css"/>
+                <script src="./.././node_modules/requirejs/require.js"></script>
+\                <script src="/bundle.js"></script>
             </div>
         )
     },
