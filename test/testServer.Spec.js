@@ -103,5 +103,30 @@ define(['server/serverUtil'], function (util) {
             expect(numberWithAppendedPrefix).toEqual(expectedPrefix+number);
         });
     });
+    describe('bin2hex', function(){
+        it('should return a hex with 2 digits when binary is length of 8 or smaller', function(){
+            var binaryNumber = '00011111';
+            var expectedHex = '1f';
+            var observedHex = util.bin2hex(binaryNumber);
+            expect(observedHex).toEqual(expectedHex);
+        });
+        it('should return correct result also with big numbers', function(){
+            var binaryNumber = '11000011010011001100110011001100110011001100110011001100';
+            var expectedHex = 'c3 4c cc cc cc cc cc';
+            var observedHex = util.bin2hex(binaryNumber);
+            expect(observedHex).toEqual(expectedHex);
+        });
+    });
+    describe('encodeNumber', function(){
+        it('should return correct result for the examples in the task', function(){
+            var numbers = [1, 1200032, 1232, 1002000000, 928867423145164, 132300400000];
+            var expectedHexes = ['01', '61 24 fa 00', '40 4d 00', '40 3e a6', 'c3 4c cc cc cc cc cc', '61 42 ff c5'];
+            numbers.forEach(function(number, index){
+                var expectedHex = expectedHexes[index];
+                var observedHex = util.encodeNumber(number);
+                expect(observedHex).toEqual(expectedHex);
+            })
+        })
+    })
 });
 
