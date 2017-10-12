@@ -15,5 +15,5 @@ To run app:
 
 To run tests:
 
-1. Right click on test/karma.conf.js and run it
+1. Right click on test/karma.conf.js and run it    
 2. Click on the link that is opened for http://localhost:9876 (maybe a different port to open in browser  - 9878 or similar)
